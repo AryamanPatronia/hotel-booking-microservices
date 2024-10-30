@@ -4,7 +4,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/build-timestamp" : "2024-10-29 - 09:46:55 +0000"
+      "app.quarkus.io/commit-id" : "e037d1510af2079a1cd42fb8abeac041c0664cba",
+      "app.quarkus.io/build-timestamp" : "2024-10-30 - 10:06:31 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -31,7 +32,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/build-timestamp" : "2024-10-29 - 09:46:55 +0000"
+      "app.quarkus.io/commit-id" : "e037d1510af2079a1cd42fb8abeac041c0664cba",
+      "app.quarkus.io/build-timestamp" : "2024-10-30 - 10:06:31 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -60,7 +62,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/build-timestamp" : "2024-10-29 - 09:46:55 +0000"
+      "app.quarkus.io/commit-id" : "e037d1510af2079a1cd42fb8abeac041c0664cba",
+      "app.quarkus.io/build-timestamp" : "2024-10-30 - 10:06:31 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -94,7 +97,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/build-timestamp" : "2024-10-29 - 09:46:55 +0000"
+      "app.quarkus.io/commit-id" : "e037d1510af2079a1cd42fb8abeac041c0664cba",
+      "app.quarkus.io/build-timestamp" : "2024-10-30 - 10:06:31 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -113,12 +117,13 @@
       "metadata" : {
         "annotations" : {
           "app.openshift.io/vcs-url" : "<<unknown>>",
-          "app.quarkus.io/build-timestamp" : "2024-10-29 - 09:46:55 +0000"
+          "app.quarkus.io/commit-id" : "e037d1510af2079a1cd42fb8abeac041c0664cba",
+          "app.quarkus.io/build-timestamp" : "2024-10-30 - 10:06:31 +0000"
         },
         "labels" : {
-          "app.openshift.io/runtime" : "quarkus",
           "app.kubernetes.io/name" : "csc8104",
-          "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
+          "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
+          "app.openshift.io/runtime" : "quarkus"
         }
       },
       "spec" : {
