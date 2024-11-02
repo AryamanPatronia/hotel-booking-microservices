@@ -3,8 +3,8 @@
   "kind" : "Service",
   "metadata" : {
     "annotations" : {
-      "app.quarkus.io/commit-id" : "4904f994688ec4f7973bb741efbc4f4af5100288",
-      "app.quarkus.io/build-timestamp" : "2024-10-31 - 12:53:03 +0000"
+      "app.quarkus.io/commit-id" : "0d52c8e6f85306ca111277a7d7adbfed73f32f60",
+      "app.quarkus.io/build-timestamp" : "2024-11-02 - 15:10:12 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -29,12 +29,12 @@
   "kind" : "Deployment",
   "metadata" : {
     "annotations" : {
-      "app.quarkus.io/commit-id" : "4904f994688ec4f7973bb741efbc4f4af5100288",
-      "app.quarkus.io/build-timestamp" : "2024-10-31 - 12:53:03 +0000"
+      "app.quarkus.io/commit-id" : "0d52c8e6f85306ca111277a7d7adbfed73f32f60",
+      "app.quarkus.io/build-timestamp" : "2024-11-02 - 15:10:12 +0000"
     },
     "labels" : {
-      "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
-      "app.kubernetes.io/name" : "csc8104"
+      "app.kubernetes.io/name" : "csc8104",
+      "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
     },
     "name" : "csc8104"
   },
@@ -42,19 +42,19 @@
     "replicas" : 1,
     "selector" : {
       "matchLabels" : {
-        "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
-        "app.kubernetes.io/name" : "csc8104"
+        "app.kubernetes.io/name" : "csc8104",
+        "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
       }
     },
     "template" : {
       "metadata" : {
         "annotations" : {
-          "app.quarkus.io/commit-id" : "4904f994688ec4f7973bb741efbc4f4af5100288",
-          "app.quarkus.io/build-timestamp" : "2024-10-31 - 12:53:03 +0000"
+          "app.quarkus.io/commit-id" : "0d52c8e6f85306ca111277a7d7adbfed73f32f60",
+          "app.quarkus.io/build-timestamp" : "2024-11-02 - 15:10:12 +0000"
         },
         "labels" : {
-          "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
-          "app.kubernetes.io/name" : "csc8104"
+          "app.kubernetes.io/name" : "csc8104",
+          "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
         }
       },
       "spec" : {
