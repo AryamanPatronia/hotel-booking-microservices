@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * <p>There are no access modifiers on the methods making them 'package' scope.  They should only be accessed by a
  * Service/Control object.<p/>
  *
- * @author Joshua Wilson
+ * @author Joshua Wilsons
  * @see Contact
  * @see javax.persistence.EntityManager
  */

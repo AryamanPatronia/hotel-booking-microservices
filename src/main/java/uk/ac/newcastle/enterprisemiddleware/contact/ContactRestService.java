@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 
 
 /**
- * <p>This class produces a RESTful service exposing the functionality of {@link ContactService}.</p>
+ * <p>This class producess a RESTful service exposing the functionality of {@link ContactService}.</p>
  *
  * <p>The Path annotation defines this as a REST Web Service using JAX-RS.</p>
  *

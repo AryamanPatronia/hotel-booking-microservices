@@ -1,4 +1,4 @@
-package uk.ac.newcastle.enterprisemiddleware.contact;
+package uk.ac.newcastle.enterprisemiddleware.customer;
 
 import javax.validation.ValidationException;
 
@@ -7,8 +7,8 @@ import javax.validation.ValidationException;
  *
  * <p>This violates the uniqueness constraint.</p>
  *
- * @author hugofirthh
- * @see Contact
+ * @author hugofirth
+ * @see Customer
  */
 public class UniqueEmailException extends ValidationException {
 

@@ -3,8 +3,8 @@
   "kind" : "Service",
   "metadata" : {
     "annotations" : {
-      "app.quarkus.io/commit-id" : "0d52c8e6f85306ca111277a7d7adbfed73f32f60",
-      "app.quarkus.io/build-timestamp" : "2024-11-02 - 15:10:12 +0000"
+      "app.quarkus.io/commit-id" : "5afa34d23d8d2f6b3b41e736cfaca61d127a84ba",
+      "app.quarkus.io/build-timestamp" : "2024-11-03 - 16:28:53 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -29,12 +29,12 @@
   "kind" : "Deployment",
   "metadata" : {
     "annotations" : {
-      "app.quarkus.io/commit-id" : "0d52c8e6f85306ca111277a7d7adbfed73f32f60",
-      "app.quarkus.io/build-timestamp" : "2024-11-02 - 15:10:12 +0000"
+      "app.quarkus.io/commit-id" : "5afa34d23d8d2f6b3b41e736cfaca61d127a84ba",
+      "app.quarkus.io/build-timestamp" : "2024-11-03 - 16:28:53 +0000"
     },
     "labels" : {
-      "app.kubernetes.io/name" : "csc8104",
-      "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
+      "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
+      "app.kubernetes.io/name" : "csc8104"
     },
     "name" : "csc8104"
   },
@@ -42,19 +42,19 @@
     "replicas" : 1,
     "selector" : {
       "matchLabels" : {
-        "app.kubernetes.io/name" : "csc8104",
-        "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
+        "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
+        "app.kubernetes.io/name" : "csc8104"
       }
     },
     "template" : {
       "metadata" : {
         "annotations" : {
-          "app.quarkus.io/commit-id" : "0d52c8e6f85306ca111277a7d7adbfed73f32f60",
-          "app.quarkus.io/build-timestamp" : "2024-11-02 - 15:10:12 +0000"
+          "app.quarkus.io/commit-id" : "5afa34d23d8d2f6b3b41e736cfaca61d127a84ba",
+          "app.quarkus.io/build-timestamp" : "2024-11-03 - 16:28:53 +0000"
         },
         "labels" : {
-          "app.kubernetes.io/name" : "csc8104",
-          "app.kubernetes.io/version" : "1.0.0-SNAPSHOT"
+          "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
+          "app.kubernetes.io/name" : "csc8104"
         }
       },
       "spec" : {

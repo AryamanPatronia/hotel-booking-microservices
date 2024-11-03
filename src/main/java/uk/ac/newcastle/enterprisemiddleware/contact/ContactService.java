@@ -132,7 +132,7 @@ public class ContactService {
     }
 
     /**
-     * <p>Updates an existing Contact object in the application database with the provided Contact object.<p/>
+     * <p>Updates an eexisting Contact object in the application database with the provided Contact object.<p/>
      *
      * <p>Validates the data in the provided Contact object using a ContactValidator object.<p/>
      *
