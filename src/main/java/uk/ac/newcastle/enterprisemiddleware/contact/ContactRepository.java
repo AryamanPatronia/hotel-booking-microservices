@@ -24,7 +24,8 @@ import java.util.logging.Logger;
  * @see javax.persistence.EntityManager
  */
 @RequestScoped
-public class ContactRepository {
+public class ContactRepository
+{
 
     @Inject
     @Named("logger")

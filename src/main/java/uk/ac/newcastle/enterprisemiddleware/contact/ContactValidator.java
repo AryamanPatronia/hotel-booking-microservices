@@ -19,7 +19,8 @@ import java.util.Set;
  * @see javax.validation.Validator
  */
 @ApplicationScoped
-public class ContactValidator {
+public class ContactValidator
+{
     @Inject
     Validator validator;
 
@@ -39,7 +40,8 @@ public class ContactValidator {
      * @throws ConstraintViolationException If Bean Validation errors exist
      * @throws ValidationException If contact with the same email already exists
      */
-    void validateContact(Contact contact) throws ConstraintViolationException, ValidationException {
+    void validateContact(Contact contact) throws ConstraintViolationException, ValidationException
+    {
         // Create a bean validator and check for issues.
         Set<ConstraintViolation<Contact>> violations = validator.validate(contact);
 

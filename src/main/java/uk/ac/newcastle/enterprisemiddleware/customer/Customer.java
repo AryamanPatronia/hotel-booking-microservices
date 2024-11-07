@@ -1,135 +1,110 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.Serializable;
-import java.util.Objects;
-import java.util.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
- * <p>This is the Domain object. The Customer class represents how customer resources are represented in the application
- * database.</p>
- *
- * <p>The class also specifies how customers are retrieved from the database (with @NamedQueries), and acceptable values
- * for Customer fields (with @NotNull, @Pattern etc...)</p>
- *
- * @author Your Name
+ * @author AryamanPatronia
+ * <p>This is the customer entity.</p>
+ * <p>It represents a customer with first and last name, age, email, and phone number.</p>
  */
 @Entity
-@NamedQueries({
-        @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c ORDER BY c.lastName ASC, c.firstName ASC"),
-        @NamedQuery(name = Customer.FIND_BY_EMAIL, query = "SELECT c FROM Customer c WHERE c.email = :email")
-})
-@XmlRootElement
-@Table(name = "customer", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
-public class Customer implements Serializable {
-    /** Default value included to remove warning. Remove or modify at will. **/
-    private static final long serialVersionUID = 1L;
-
-    public static final String FIND_ALL = "Customer.findAll";
-    public static final String FIND_BY_EMAIL = "Customer.findByEmail";
-
+public class Customer
+{
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Size(min = 1, max = 25)
-    @Pattern(regexp = "[A-Za-z-']+", message = "Please use a name without numbers or specials")
-    @Column(name = "first_name")
+    @Size(min = 1, max = 50)
     private String firstName;
 
     @NotNull
-    @Size(min = 1, max = 25)
-    @Pattern(regexp = "[A-Za-z-']+", message = "Please use a name without numbers or specials")
-    @Column(name = "last_name")
+    @Size(min = 1, max = 50)
     private String lastName;
 
     @NotNull
-    @NotEmpty
-    @Email(message = "The email address must be in the format of name@domain.com")
+    @Min(0)  // Ensures the age cannot be negative
+    private int age;
+
+    @NotNull
+    @Email
     private String email;
 
     @NotNull
-    @Pattern(regexp = "^\\([2-9][0-8][0-9]\\)\\s?[0-9]{3}\\-[0-9]{4}$")
-    @Column(name = "phone_number")
+    @Size(min = 10, max = 15)
     private String phoneNumber;
 
-    @NotNull
-    @Past(message = "Birthdates can not be in the future. Please choose one from the past")
-    @Column(name = "birth_date")
-    @Temporal(TemporalType.DATE)
-    private Date birthDate;
-
-    @Column(name = "state")
-    private String state;
-
-    public Long getId() {
+    /**
+     * The getters and setters for the customer fields...
+     */
+    public Long getId()
+    {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Long id)
+    {
         this.id = id;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public String getEmail() {
+    public int getAge()
+    {
+        return age;
+    }
+
+    public void setAge(int age)
+    {
+        this.age = age;
+    }
+
+    public String getEmail()
+    {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email)
+    {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
+    public String getPhoneNumber()
+    {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(String phoneNumber)
+    {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Customer)) return false;
-        Customer customer = (Customer) o;
-        return email.equals(customer.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(email);
+    public String toString()
+    {
+        return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", email="
+                + email + ", phoneNumber=" + phoneNumber + "]";
     }
 }

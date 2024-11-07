@@ -3,8 +3,8 @@
   "kind" : "Service",
   "metadata" : {
     "annotations" : {
-      "app.quarkus.io/commit-id" : "5afa34d23d8d2f6b3b41e736cfaca61d127a84ba",
-      "app.quarkus.io/build-timestamp" : "2024-11-03 - 16:28:53 +0000"
+      "app.quarkus.io/commit-id" : "74c4f08befde3ceed45aee00de5a36e183268f0a",
+      "app.quarkus.io/build-timestamp" : "2024-11-07 - 05:01:26 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -29,8 +29,8 @@
   "kind" : "Deployment",
   "metadata" : {
     "annotations" : {
-      "app.quarkus.io/commit-id" : "5afa34d23d8d2f6b3b41e736cfaca61d127a84ba",
-      "app.quarkus.io/build-timestamp" : "2024-11-03 - 16:28:53 +0000"
+      "app.quarkus.io/commit-id" : "74c4f08befde3ceed45aee00de5a36e183268f0a",
+      "app.quarkus.io/build-timestamp" : "2024-11-07 - 05:01:26 +0000"
     },
     "labels" : {
       "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
@@ -49,8 +49,8 @@
     "template" : {
       "metadata" : {
         "annotations" : {
-          "app.quarkus.io/commit-id" : "5afa34d23d8d2f6b3b41e736cfaca61d127a84ba",
-          "app.quarkus.io/build-timestamp" : "2024-11-03 - 16:28:53 +0000"
+          "app.quarkus.io/commit-id" : "74c4f08befde3ceed45aee00de5a36e183268f0a",
+          "app.quarkus.io/build-timestamp" : "2024-11-07 - 05:01:26 +0000"
         },
         "labels" : {
           "app.kubernetes.io/version" : "1.0.0-SNAPSHOT",
