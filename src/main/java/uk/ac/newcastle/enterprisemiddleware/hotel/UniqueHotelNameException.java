@@ -13,7 +13,8 @@ import javax.validation.ValidationException;
 public class UniqueHotelNameException extends ValidationException
 {
 
-    public UniqueHotelNameException(String message) {
+    public UniqueHotelNameException(String message)
+    {
         super(message);
     }
 

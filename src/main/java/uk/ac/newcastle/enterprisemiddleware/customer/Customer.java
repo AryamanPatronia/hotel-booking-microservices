@@ -1,110 +1,114 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
 
+
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
+ * <p>This is the Domain object. The Customer class represents how customer resources are represented in the application
+ * database.</p>
+ *
+ * <p>The class also specifies how customers are retrieved from the database (with @NamedQueries), and acceptable values
+ * for Customer fields (with @NotNull, @Pattern, etc...)</p>
+ *
  * @author AryamanPatronia
- * <p>This is the customer entity.</p>
- * <p>It represents a customer with first and last name, age, email, and phone number.</p>
  */
 @Entity
-public class Customer
+@NamedQueries({
+        @NamedQuery(name = Customer.FIND_ALL, query = "SELECT c FROM Customer c ORDER BY c.customerName ASC"),
+        @NamedQuery(name = Customer.FIND_BY_EMAIL, query = "SELECT c FROM Customer c WHERE c.customerEmail = :email")
+})
+@XmlRootElement
+@Table(name = "Customer", uniqueConstraints = @UniqueConstraint(columnNames = "Customer_Email"))
+public class Customer implements Serializable
 {
+    /** Default value included to remove warning. Remove or modify at will. **/
+    private static final long serialVersionUID = 1L;
+
+    public static final String FIND_ALL = "Customer.findAll";
+    public static final String FIND_BY_EMAIL = "Customer.findByEmail";
+
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.TABLE)  //This didn't work before. I am commenting this...
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "customer_seq") //using sequence, otherwise we see errors in the terminal...
+    @SequenceGenerator(name = "customer_seq", sequenceName = "customer_sequence", allocationSize = 1)
+    private Long customerID;
 
     @NotNull
-    @Size(min = 1, max = 50)
-    private String firstName;
+    @Size(min = 1, max = 25)
+    @Pattern(regexp = "[A-Za-z-']+", message = "Please use a name without numbers or specials")
+    @Column(name = "customer_name")
+    private String customerName;
 
     @NotNull
-    @Size(min = 1, max = 50)
-    private String lastName;
+    @NotEmpty
+    @Email(message = "The email address must be in the format of name@domain.com")
+    @Column(name = "customer_email")
+    private String customerEmail;
 
     @NotNull
-    @Min(0)  // Ensures the age cannot be negative
-    private int age;
+    @Pattern(regexp = "^\\([2-9][0-8][0-9]\\)\\s?[0-9]{3}\\-[0-9]{4}$")
+    @Column(name = "customer_phone_number")
+    private String customerPhoneNumber;
 
-    @NotNull
-    @Email
-    private String email;
 
-    @NotNull
-    @Size(min = 10, max = 15)
-    private String phoneNumber;
-
-    /**
-     * The getters and setters for the customer fields...
-     */
-    public Long getId()
+    public Long getCustomerID()
     {
-        return id;
+        return customerID;
     }
 
-    public void setId(Long id)
+    public void setCustomerID(Long customerID)
     {
-        this.id = id;
+        this.customerID = customerID;
     }
 
-    public String getFirstName()
+    public String getCustomerName()
     {
-        return firstName;
+        return customerName;
     }
 
-    public void setFirstName(String firstName)
+    public void setCustomerName(String customerName)
     {
-        this.firstName = firstName;
+        this.customerName = customerName;
     }
 
-    public String getLastName()
+    public String getCustomerEmail()
     {
-        return lastName;
+        return customerEmail;
     }
 
-    public void setLastName(String lastName)
+    public void setCustomerEmail(String customerEmail)
     {
-        this.lastName = lastName;
+        this.customerEmail = customerEmail;
     }
 
-    public int getAge()
+    public String getCustomerPhoneNumber()
     {
-        return age;
+        return customerPhoneNumber;
     }
 
-    public void setAge(int age)
+    public void setCustomerPhoneNumber(String customerPhoneNumber)
     {
-        this.age = age;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public String getPhoneNumber()
-    {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber)
-    {
-        this.phoneNumber = phoneNumber;
+        this.customerPhoneNumber = customerPhoneNumber;
     }
 
     @Override
-    public String toString()
+    public boolean equals(Object o)
     {
-        return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", email="
-                + email + ", phoneNumber=" + phoneNumber + "]";
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return customerEmail.equals(customer.customerEmail);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hashCode(customerEmail);
     }
 }

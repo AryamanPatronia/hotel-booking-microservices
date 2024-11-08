@@ -20,6 +20,7 @@ import java.util.Set;
 @ApplicationScoped
 public class HotelValidator
 {
+
     @Inject
     Validator validator;
 
@@ -48,43 +49,41 @@ public class HotelValidator
         }
 
         // Check the uniqueness of the hotel name
-        if (nameAlreadyExists(hotel.getName(), hotel.getId()))
+        if (nameAlreadyExists(hotel.getHotelName(), hotel.getId()))
         {
-            throw new UniqueHotelNameException("Unique Hotel Name Violation");
+            throw new UniqueHotelNameException("Hotel with the same name already exists.");
         }
     }
 
     /**
      * <p>Checks if a hotel with the same name is already registered. This is the only way to easily capture the
-     * "@UniqueConstraint(columnNames = "name")" constraint from the Hotel class.</p>
+     * "@UniqueConstraint(columnNames = "hotel_name")" constraint from the Hotel class.</p>
      *
      * <p>Since updating may involve using a name already in the database, we need to ensure it is the name
      * from the record being updated.</p>
      *
-     * @param name The hotel name to check for uniqueness
+     * @param hotelName The hotel name to check for uniqueness
      * @param id The hotel id to check the name against if it was found
      * @return boolean representing whether the name was found, and if so, if it belongs to the hotel with the specified id
      */
-
-    boolean nameAlreadyExists(String name, Long id)
+    boolean nameAlreadyExists(String hotelName, Long id)
     {
         List<Hotel> hotels = hotelRepository.findAllOrderedByName();
 
         for (Hotel hotel : hotels)
         {
-            if (hotel.getName().equals(name))
+            if (hotel.getHotelName().equals(hotelName))
             {
-                // If `id` is provided, allow the name if it belongs to the hotel with the same `id`
+
                 if (id != null && hotel.getId().equals(id))
                 {
                     return false;
                 }
-                // Otherwise, a hotel with this name already exists
+
                 return true;
             }
         }
 
         return false;
     }
-
 }

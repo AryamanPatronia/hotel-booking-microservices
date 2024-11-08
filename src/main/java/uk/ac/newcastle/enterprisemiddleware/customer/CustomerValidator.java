@@ -1,49 +1,97 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
+import uk.ac.newcastle.enterprisemiddleware.contact.UniqueEmailException; // using the UniqueEmailException code...
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
-
 /**
+ * <p>This class provides methods to check Customer objects against arbitrary requirements.</p>
+ *
  * @author AryamanPatronia
  * @see Customer
  * @see CustomerRepository
+ * @see javax.validation.Validator
  */
-
 @ApplicationScoped
 public class CustomerValidator
 {
 
     @Inject
-    Logger log;
-
-    @Inject
     Validator validator;
 
-    public void validateCustomer(Customer customer)
+    @Inject
+    CustomerRepository crud;
+
+    /**
+     * <p>Validates the given Customer object and throws validation exceptions based on the type of error. If the error is standard
+     * bean validation errors, it will throw a ConstraintViolationException with the set of the constraints violated.</p>
+     *
+     * <p>If the error is caused because an existing customer with the same email is registered, it throws a regular validation
+     * exception so that it can be interpreted separately.</p>
+     *
+     * @param customer The Customer object to be validated
+     * @throws ConstraintViolationException If Bean Validation errors exist
+     * @throws ValidationException If customer with the same email already exists
+     */
+    void validateCustomer(Customer customer) throws ConstraintViolationException, ValidationException
     {
-        // Validates the customer using javax.validation
+        // Create a bean validator and check for issues.
         Set<ConstraintViolation<Customer>> violations = validator.validate(customer);
+
         if (!violations.isEmpty())
         {
-            for (ConstraintViolation<Customer> violation : violations)
-            {
-                log.warning("Validation error: " + violation.getMessage());
-            }
-            throw new IllegalArgumentException("Validation failed for customer: " + customer);
+            throw new ConstraintViolationException(new HashSet<ConstraintViolation<?>>(violations));
         }
-        validatePhoneNumber(customer.getPhoneNumber());
-    }
 
-    private void validatePhoneNumber(String phoneNumber)
-    {
-        // Simple validation to check if the phone number is numeric and in the right length range (10-15 characters)...
-        if (!phoneNumber.matches("^\\+?[0-9]{10,15}$"))
+        // Check the uniqueness of the email address
+        if (emailAlreadyExists(customer.getCustomerEmail(), customer.getCustomerID()))
         {
-            throw new IllegalArgumentException("Phone number must be in a valid format (10-15 digits, optionally starting with '+').");
+            throw new UniqueEmailException("Unique Email Violation");
         }
+    }
+    /**
+     * <p>Checks if a customer with the same email address is already registered. This is the only way to easily capture the
+     * "@UniqueConstraint(columnNames = "customerEmail")" constraint from the Customer class.</p>
+     *
+     * <p>Since Update will be using an email that is already in the database, we need to make sure that it is the email
+     * from the record being updated.</p>
+     *
+     * @param email The email to check is unique
+     * @param customerID The customer id to check the email against if it was found
+     * @return boolean which represents whether the email was found, and if so, if it belongs to the user with id
+     */
+    boolean emailAlreadyExists(String email, Long customerID)
+    {
+        Customer customer = null;
+        Customer customerWithID = null;
+        try
+        {
+            customer = crud.findByEmail(email);
+        } catch (NoResultException e)
+        {
+            // ignore
+        }
+
+        if (customer != null && customerID != null)
+        {
+            try
+            {
+                customerWithID = crud.findById(customerID);
+                if (customerWithID != null && customerWithID.getCustomerEmail().equals(email))
+                {
+                    customer = null;
+                }
+            } catch (NoResultException e)
+            {
+                // ignore
+            }
+        }
+        return customer != null;
     }
 }

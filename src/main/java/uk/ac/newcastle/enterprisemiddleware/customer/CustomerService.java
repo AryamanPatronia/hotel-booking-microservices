@@ -1,153 +1,127 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
 
-import uk.ac.newcastle.enterprisemiddleware.util.RestServiceException;
-
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
-import javax.transaction.Transactional;
-import javax.ws.rs.core.Response;
+import javax.inject.Named;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
- * <p>This is the CustomerService class for handling customer-related business logic...</p>
- */
-/**
+ * <p>This Service class handles business logic for the Customer entity.</p>
+ *
+ * <p>It performs operations like validation, CRUD actions, and logging. It calls the CustomerRepository to persist
+ * and retrieve Customer objects from the database.</p>
+ *
  * @author AryamanPatronia
- * @see CustomerRepository
  * @see CustomerValidator
+ * @see CustomerRepository
  */
-@ApplicationScoped
+@Dependent
 public class CustomerService
 {
 
     @Inject
-    CustomerRepository repository;
+    @Named("logger")
+    Logger log;
 
     @Inject
     CustomerValidator validator;
 
+    @Inject
+    CustomerRepository crud;
+
     /**
-     * <p>Finds all customers ordered by their full name (first and last name).</p>
+     * <p>Returns a list of all persisted {@link Customer} objects, sorted alphabetically by customer name.</p>
      *
-     * @return A list of all customers, sorted by first name and last name.
+     * @return List of Customer objects
      */
     public List<Customer> findAllOrderedByName()
     {
-        return repository.findAllOrderedByName();
-    }
-    /**
-     * <p>Finds a customer by their email.</p>
-     *
-     * @param email The email of the customer.
-     * @return The customer with the specified email.
-     */
-    public Customer findByEmail(String email)
-    {
-        Customer customer = repository.findByEmail(email);
-        if (customer == null)
-        {
-            throw new RestServiceException("A customer with this email doesn't exist: " + email, Response.Status.NOT_FOUND);
-        }
-        return customer;
+        return crud.findAllOrderedByName();
     }
 
     /**
-     * <p>Finds a customer by their ID.</p>
+     * <p>Returns a single Customer object, specified by a Long customerID.</p>
      *
-     * @param id The ID of the customer.
-     * @return The customer with the specified ID.
-     * @throws RestServiceException If no customer is found with the given ID.
+     * @param customerID The ID of the Customer to be returned
+     * @return The Customer with the specified ID
      */
-    public Customer findById(long id)
+    public Customer findById(Long customerID)
     {
-        Customer customer = repository.findById(id);
-        if (customer == null)
-        {
-            throw new RestServiceException("There is no customer with the given ID: " + id, Response.Status.NOT_FOUND);
-        }
-        return customer;
+        return crud.findById(customerID);
+    }
+
+    /**
+     * <p>Returns a single Customer object, specified by a String customerEmail.</p>
+     *
+     * <p>If there is more than one Customer with the specified email, only the first encountered will be returned.</p>
+     *
+     * @param customerEmail The email of the Customer to be returned
+     * @return The first Customer with the specified email
+     */
+    public Customer findByEmail(String customerEmail)
+    {
+        return crud.findByEmail(customerEmail);
     }
     /**
-     * <p>Creates a new customer.</p>
+     * <p>Creates a new Customer object in the application database.</p>
      *
-     * @param customer The customer to create.
-     * @throws UniqueEmailException If the email of the customer is already in use.
-     * @throws UniquePhoneNumberException If the phone number is already in use.
+     * <p>Validates the data in the provided Customer object using {@link CustomerValidator}.</p>
+     *
+     * @param customer The Customer object to be created
+     * @return The Customer object that was successfully created
+     * @throws Exception if there is any error during the process
      */
-    @Transactional
-    public void create(Customer customer)
+    public Customer create(Customer customer) throws Exception
     {
-        // Validate customer data...
+        log.info("CustomerService.create() - Creating " + customer.getCustomerName());
+
+        // Validate the customer before creating it
         validator.validateCustomer(customer);
 
-        // Check if the email is already used by another customer...
-        if (repository.findByEmail(customer.getEmail()) != null)
-        {
-            throw new UniqueEmailException("The email " + customer.getEmail() + " is already used by another customer.");
-        }
-
-        // Check if the phone number is already used by another customer...
-        if (repository.findByPhoneNumber(customer.getPhoneNumber()) != null)
-        {
-            throw new UniquePhoneNumberException("The phone number " + customer.getPhoneNumber() + " is already used by another customer.");
-        }
-
-        // Save the customer to the database...
-        repository.create(customer);
+        // Create the customer in the database
+        return crud.create(customer);
     }
     /**
-     * <p>Updates an existing customer.</p>
+     * <p>Updates an existing Customer object in the application database.</p>
      *
-     * @param customer The customer to update.
-     * @throws RestServiceException If no customer is found with the given ID.
-     * @throws UniqueEmailException If the email of the customer is already in use.
-     * @throws UniquePhoneNumberException If the phone number is already in use.
+     * <p>Validates the data in the provided Customer object using {@link CustomerValidator}.</p>
+     *
+     * @param customer The Customer object to be updated
+     * @return The updated Customer object
+     * @throws Exception if there is any error during the process
      */
-    @Transactional
-    public void update(Customer customer)
+    public Customer update(Customer customer) throws Exception
     {
-        // Validate customer data
+        log.info("CustomerService.update() - Updating " + customer.getCustomerName());
+
+        // Validate the customer before updating it
         validator.validateCustomer(customer);
 
-        // Check if the customer exists and if not, throw an exception...
-        Customer existingCustomer = repository.findById(customer.getId());
-        if (existingCustomer == null)
-        {
-            throw new RestServiceException("The customer with the given ID doesn't exist...: " + customer.getId(), Response.Status.NOT_FOUND);
-        }
-
-        // Check if the email is already used by another customer (unless it’s the same customer)
-        if (!existingCustomer.getEmail().equals(customer.getEmail()) && repository.findByEmail(customer.getEmail()) != null)
-        {
-            throw new UniqueEmailException("The email " + customer.getEmail() + " is already used by another customer.");
-        }
-
-        // Check if the phone number is already used by another customer (unless it’s the same customer)
-        if (!existingCustomer.getPhoneNumber().equals(customer.getPhoneNumber()) && repository.findByPhoneNumber(customer.getPhoneNumber()) != null)
-        {
-            throw new UniquePhoneNumberException("The phone number " + customer.getPhoneNumber() + " is already used by another customer.");
-        }
-
-        // Update the customer in the database...
-        repository.update(customer);
+        // Update the customer in the database
+        return crud.update(customer);
     }
     /**
-     * <p>Deletes a customer by their ID.</p>
+     * <p>Deletes the provided Customer object from the application database.</p>
      *
-     * @param id The ID of the customer to delete.
-     * @throws RestServiceException If no customer is found with the given ID.
+     * @param customer The Customer object to be deleted
+     * @return The Customer object that was successfully deleted; or null
+     * @throws Exception if there is any error during the process
      */
-    @Transactional
-    public void delete(long id)
+    public Customer delete(Customer customer) throws Exception
     {
-        // Find the customer by ID
-        Customer customer = repository.findById(id);
-        if (customer == null)
+        log.info("CustomerService.delete() - Deleting " + customer.getCustomerName());
+
+        Customer deletedCustomer = null;
+
+        if (customer.getCustomerID() != null)
         {
-            throw new RestServiceException("Customer with the given ID not found: " + id, Response.Status.NOT_FOUND);
+            deletedCustomer = crud.delete(customer);
+        } else
+        {
+            log.info("CustomerService.delete() - No ID found, can't delete.");
         }
 
-        // Delete the customer from the database using the ID
-        repository.deleteById(id);
+        return deletedCustomer;
     }
 }

@@ -12,9 +12,9 @@ import java.util.logging.Logger;
 /**
  * @author AryamanPatronia
  * <p>This is a Repository class that connects the Service/Control layer (see {@link HotelService}) with the
- * Domain/Entity Object (see {@link Hotel}).<p/>
+ * Domain/Entity Object (see {@link Hotel}).</p>
  *
- * <p>The methods are 'package' scope and should only be accessed by a Service/Control object.<p/>
+ * <p>The methods are 'package' scope and should only be accessed by a Service/Control object.</p>
  *
  * @see Hotel
  * @see javax.persistence.EntityManager
@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 @RequestScoped
 public class HotelRepository
 {
-
     @Inject
     @Named("logger")
     Logger log;
@@ -57,15 +56,13 @@ public class HotelRepository
      *
      * @param hotel The Hotel object to be persisted
      * @return The Hotel object that has been persisted
-     * @throws ConstraintViolationException, ValidationException, Exception
+     * @throws ConstraintViolationException, Exception
      */
-    Hotel create(Hotel hotel) throws Exception
+    public Hotel create(Hotel hotel) throws Exception
     {
-        log.info("HotelRepository.create() - Creating " + hotel.getName());
+        log.info("HotelRepository.create() - Creating " + hotel.getHotelName());
 
-        /**
-         *  Write hotel to the database...
-          */
+        // Write hotel to the database...
         em.persist(hotel);
 
         return hotel;
@@ -76,10 +73,11 @@ public class HotelRepository
      *
      * @param hotel The Hotel object to be merged with an existing Hotel
      * @return The Hotel that has been merged
-     * @throws ConstraintViolationException, ValidationException, Exception
+     * @throws ConstraintViolationException, Exception
      */
-    Hotel update(Hotel hotel) throws Exception {
-        log.info("HotelRepository.update() - Updating " + hotel.getName());
+    public Hotel update(Hotel hotel) throws Exception
+    {
+        log.info("HotelRepository.update() - Updating " + hotel.getHotelName());
 
         em.merge(hotel);
 
@@ -93,9 +91,9 @@ public class HotelRepository
      * @return The Hotel object that has been successfully removed from the application database; or null
      * @throws Exception
      */
-    Hotel delete(Hotel hotel) throws Exception
+    public Hotel delete(Hotel hotel) throws Exception
     {
-        log.info("HotelRepository.delete() - Deleting " + hotel.getName());
+        log.info("HotelRepository.delete() - Deleting " + hotel.getHotelName());
 
         if (hotel.getId() != null)
         {

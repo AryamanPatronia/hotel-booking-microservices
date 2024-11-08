@@ -4,7 +4,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.ConstraintViolationException;
-import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -12,17 +11,18 @@ import java.util.logging.Logger;
  * @see HotelValidator
  * @see HotelRepository
  *
-  <p>This Service assumes the Control responsibility in the ECB pattern.</p>
+ * <p>This Service assumes the Control responsibility in the ECB pattern.</p>
  *
  * <p>The validation is done here so that it may be used by other Boundary Resources. Other Business Logic would go here
  * as well.</p>
  *
- * <p>There are no access modifiers on the methods, making them 'package' scope.  They should only be accessed by a
+ * <p>There are no access modifiers on the methods, making them 'package' scope. They should only be accessed by a
  * Boundary / Web Service class with public methods.</p>
  *
  */
 @ApplicationScoped
-public class HotelService {
+public class HotelService
+{
 
     @Inject
     @Named("logger")
@@ -35,21 +35,13 @@ public class HotelService {
     HotelRepository hotelRepository;
 
     /**
-     * <p>Returns a List of all persisted {@link Hotel} objects.</p>
-     *
-     * @return List of Hotel objects
-     */
-    List<Hotel> findAll() {
-        return hotelRepository.findAllOrderedByName();
-    }
-
-    /**
      * <p>Returns a single Hotel object, specified by a Long id.</p>
      *
      * @param id The id field of the Hotel to be returned
      * @return The Hotel with the specified id
      */
-    public Hotel findById(Long id) {
+    public Hotel findById(Long id)
+    {
         return hotelRepository.findById(id);
     }
 
@@ -59,11 +51,14 @@ public class HotelService {
      * @param id The id field of the Hotel to be returned (as a String)
      * @return The Hotel with the specified id
      */
-    public Hotel findById(String id) {
-        try {
+    public Hotel findById(String id)
+    {
+        try
+        {
             Long idLong = Long.valueOf(id);  // Convert String to Long
             return hotelRepository.findById(idLong);
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException e)
+        {
             log.warning("Invalid ID format: " + id);
             return null;  // Return null or handle the error appropriately
         }
@@ -78,8 +73,9 @@ public class HotelService {
      * @return The Hotel object that has been successfully written to the application database
      * @throws ConstraintViolationException, ValidationException, Exception
      */
-    Hotel create(Hotel hotel) throws Exception {
-        log.info("HotelService.create() - Creating hotel: " + hotel.getName());
+    public Hotel create(Hotel hotel) throws Exception
+    {
+        log.info("HotelService.create() - Creating hotel: " + hotel.getHotelName());
 
         // Validate hotel details
         validator.validateHotel(hotel);
@@ -97,8 +93,9 @@ public class HotelService {
      * @return The Hotel object that has been successfully updated in the application database
      * @throws ConstraintViolationException, ValidationException, Exception
      */
-    Hotel update(Hotel hotel) throws Exception {
-        log.info("HotelService.update() - Updating hotel: " + hotel.getName());
+    public Hotel update(Hotel hotel) throws Exception
+    {
+        log.info("HotelService.update() - Updating hotel: " + hotel.getHotelName());
 
         // Validate hotel details
         validator.validateHotel(hotel);
@@ -114,14 +111,18 @@ public class HotelService {
      * @return The Hotel object that has been successfully removed from the application database; or null
      * @throws Exception
      */
-    Hotel delete(Hotel hotel) throws Exception {
-        log.info("HotelService.delete() - Deleting hotel: " + hotel.getName());
+    public Hotel delete(Hotel hotel) throws Exception
+    {
+        log.info("HotelService.delete() - Deleting hotel: " + hotel.getHotelName());
 
         Hotel deletedHotel = null;
 
-        if (hotel.getId() != null) {
+        if (hotel.getId() != null)
+        {
             deletedHotel = hotelRepository.delete(hotel);
-        } else {
+        }
+        else
+        {
             log.info("HotelService.delete() - No ID was found so can't Delete.");
         }
 

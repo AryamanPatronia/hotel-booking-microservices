@@ -1,120 +1,134 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
 
-import uk.ac.newcastle.enterprisemiddleware.util.RestServiceException;
-
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.core.Response;
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
+ * <p>This is a Repository class and connects the Service/Control layer (see {@link CustomerService}) with the
+ * Domain/Entity Object (see {@link Customer}).</p>
+ *
+ * <p>There are no access modifiers on the methods making them 'package' scope. They should only be accessed by a
+ * Service/Control object.</p>
+ *
  * @author AryamanPatronia
  * @see Customer
  * @see javax.persistence.EntityManager
- <p>Repository for handling Customer entity operations.</p>
- * <p>This is responsible for interacting with the database to perform CRUD operations for customers.</p>
  */
-@ApplicationScoped
+@RequestScoped
 public class CustomerRepository
 {
-    @PersistenceContext
+
+    @Inject
+    @Named("logger")
+    Logger log;
+
+    @Inject
     EntityManager em;
 
     /**
-     * <p>Finds all customers, ordered by their full name (first name and last name).</p>
+     * <p>Returns a List of all persisted {@link Customer} objects, sorted alphabetically by customer name.</p>
      *
-     * @return A list of customers, ordered by first name and last name.
+     * @return List of Customer objects
      */
     public List<Customer> findAllOrderedByName()
     {
-        String jpql = "SELECT c FROM Customer c ORDER BY c.firstName, c.lastName";
-        TypedQuery<Customer> query = em.createQuery(jpql, Customer.class);
+        TypedQuery<Customer> query = em.createNamedQuery(Customer.FIND_ALL, Customer.class);
         return query.getResultList();
     }
+
     /**
-     * <p>Finds a customer by email.</p>
+     * <p>Returns a single Customer object, specified by a Long customerID.</p>
      *
-     * @param email The email of the customer.
-     * @return The customer with the specified email, or null if not found.
+     * @param customerID The ID of the Customer to be returned
+     * @return The Customer with the specified ID
      */
-    public Customer findByEmail(String email)
+    public Customer findById(Long customerID)
     {
-        try
-        {
-            String jpql = "SELECT c FROM Customer c WHERE c.email = :email";
-            TypedQuery<Customer> query = em.createQuery(jpql, Customer.class);
-            query.setParameter("email", email);
-            return query.getSingleResult();
-        } catch (Exception e)
-        {
-            return null;
-        }
+        return em.find(Customer.class, customerID);
     }
 
     /**
-     * <p>Finds a customer by their phone number.</p>
+     * <p>Returns a single Customer object, specified by a String customerEmail.</p>
      *
-     * @param phoneNumber The phone number of the customer.
-     * @return The customer with the specified phone number, or null if not found.
+     * <p>If there is more than one Customer with the specified email, only the first encountered will be returned.</p>
+     *
+     * @param customerEmail The email of the Customer to be returned
+     * @return The first Customer with the specified email
      */
-    public Customer findByPhoneNumber(String phoneNumber)
+    public Customer findByEmail(String customerEmail)
     {
-        try {
-            String jpql = "SELECT c FROM Customer c WHERE c.phoneNumber = :phoneNumber";
-            TypedQuery<Customer> query = em.createQuery(jpql, Customer.class);
-            query.setParameter("phoneNumber", phoneNumber);
-            return query.getSingleResult();
-        } catch (Exception e)
-        {
-            return null;
-        }
+        TypedQuery<Customer> query = em.createNamedQuery(Customer.FIND_BY_EMAIL, Customer.class)
+                .setParameter("email", customerEmail);
+        return query.getSingleResult();
     }
+
+
     /**
-     * <p>Finds a customer by their ID.</p>
+     * <p>Persists the provided Customer object to the application database using the EntityManager.</p>
      *
-     * @param id The ID of the customer.
-     * @return The customer with the specified ID, or null if not found.
-     */
-    public Customer findById(long id) {
-        return em.find(Customer.class, id);
-    }
-    /**
-     * <p>Creates a new customer in the database.</p>
+     * <p>{@link javax.persistence.EntityManager#persist(Object) persist(Object)} takes an entity instance, adds it to the
+     * context and makes that instance managed (i.e., future updates to the entity will be tracked).</p>
      *
-     * @param customer The customer to create.
+     * @param customer The Customer object to be persisted
+     * @return The Customer object that has been persisted
+     * @throws ConstraintViolationException, ValidationException, Exception
      */
-    @Transactional
-    public void create(Customer customer)
+    public Customer create(Customer customer) throws Exception
     {
+        log.info("CustomerRepository.create() - Creating " + customer.getCustomerName());
+
+        // Persist the customer to the database
         em.persist(customer);
-    }
-    /**
-     * <p>Updates an existing customer in the database.</p>
-     *
-     * @param customer The customer to update.
-     */
-    @Transactional
-    public void update(Customer customer)
-    {
-        em.merge(customer);
+
+        return customer;
     }
 
     /**
-     * <p>This method deletes a customer from the database.</p>
+     * <p>Updates an existing Customer object in the application database with the provided Customer object.</p>
      *
+     * <p>{@link javax.persistence.EntityManager#merge(Object) merge(Object)} creates a new instance of your entity,
+     * copies the state from the supplied entity, and makes the new copy managed. The instance you pass in will not be
+     * managed (any changes you make will not be part of the transaction - unless you call merge again).</p>
+     *
+     * @param customer The Customer object to be merged with an existing Customer
+     * @return The Customer that has been merged
+     * @throws ConstraintViolationException, ValidationException, Exception
      */
-    @Transactional
-    public void deleteById(long id)
+    public Customer update(Customer customer) throws Exception
     {
-        Customer customer = em.find(Customer.class, id);
-        if (customer != null) {
-            em.remove(customer);
-        } else {
-            throw new RestServiceException("The customer with the given ID doesn't exist" +
-                    ": " + id, Response.Status.NOT_FOUND);
-        }
+        log.info("CustomerRepository.update() - Updating " + customer.getCustomerName());
+
+        // Either update the customer or add it if it can't be found
+        em.merge(customer);
+
+        return customer;
     }
+
+    /**
+     * <p>Deletes the provided Customer object from the application database if found there.</p>
+     *
+     * @param customer The Customer object to be removed from the application database
+     * @return The Customer object that has been successfully removed from the application database; or null
+     */
+    public Customer delete(Customer customer) throws Exception
+    {
+        log.info("CustomerRepository.delete() - Deleting " + customer.getCustomerName());
+
+        if (customer.getCustomerID() != null)
+        {
+            em.remove(em.merge(customer));
+        } else
+        {
+            log.info("CustomerRepository.delete() - No ID was found so can't Delete.");
+        }
+
+        return customer;
+    }
+
 }

@@ -23,15 +23,15 @@ import java.util.logging.Logger;
 
 /**
  * @author AryamanPatronia
- */
+ * @see HotelService
+ * @see javax.ws.rs.core.Response
+ **/
 
-
-@Tag(name = "2. Hotels", description = "Hotel Operations")
+@Tag(name = "2. Hotels", description = "Hotel Operations...")
 @Path("/hotels")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class HotelRestService
-{
+public class HotelRestService {
 
     @Inject
     @Named("logger")
@@ -39,8 +39,17 @@ public class HotelRestService
 
     @Inject
     HotelService service;
+
     @Inject
     HotelRepository hotelRepository;
+
+    @Inject
+    HotelValidator hotelValidator; // Injecting the validator
+
+    /**
+     * Operation to fetch all the hotels that exist in the database...s
+     * @return Response of all the hotels that exist in the database...
+     */
 
     @GET
     @Operation(summary = "Fetch all Hotels", description = "Returns a JSON array of all stored Hotel objects.")
@@ -49,6 +58,8 @@ public class HotelRestService
         List<Hotel> hotels = hotelRepository.findAllOrderedByName();
         return Response.ok(hotels).build();
     }
+
+    //------------COMMENTING FOR BETTER VISIBILITY--------------
 
     @GET
     @Path("/{id:[0-9]+}")
@@ -70,6 +81,13 @@ public class HotelRestService
         return Response.ok(hotel).build();
     }
 
+    //------------COMMENTING FOR BETTER VISIBILITY--------------
+
+    /**
+     * Operation to add a new hotel to the database...
+     * @param hotel
+     * @return
+     */
     @POST
     @Operation(description = "Add a new Hotel to the database")
     @APIResponses(value = {
@@ -93,10 +111,12 @@ public class HotelRestService
         try
         {
             hotel.setId(null); // Clear the ID if accidentally set
+            hotelValidator.validateHotel(hotel); // Validate the hotel before creating
             service.create(hotel);
             builder = Response.status(Response.Status.CREATED).entity(hotel);
 
-        } catch (ConstraintViolationException ce)
+        }
+        catch (ConstraintViolationException ce)
         {
             Map<String, String> responseObj = new HashMap<>();
             for (ConstraintViolation<?> violation : ce.getConstraintViolations())
@@ -113,6 +133,10 @@ public class HotelRestService
         log.info("createHotel completed. Hotel = " + hotel);
         return builder.build();
     }
+
+
+        //------------COMMENTING FOR BETTER VISIBILITY--------------
+
 
     @PUT
     @Path("/{id:[0-9]+}")
@@ -131,12 +155,10 @@ public class HotelRestService
             @Parameter(description = "JSON representation of Hotel object to be updated in the database", required = true)
             Hotel hotel)
     {
-
         if (hotel == null || hotel.getId() == null)
         {
             throw new RestServiceException("Invalid Hotel supplied in request body", Response.Status.BAD_REQUEST);
         }
-
         if (hotel.getId() != id)
         {
             Map<String, String> responseObj = new HashMap<>();
@@ -144,20 +166,19 @@ public class HotelRestService
             throw new RestServiceException("Hotel details supplied in request body conflict with another Hotel",
                     responseObj, Response.Status.CONFLICT);
         }
-
         if (service.findById(id) == null)
         {
             throw new RestServiceException("No Hotel with the id " + id + " was found!", Response.Status.NOT_FOUND);
         }
-
         Response.ResponseBuilder builder;
-
         try
         {
+            hotelValidator.validateHotel(hotel); // Validate the hotel before updating
             service.update(hotel);
             builder = Response.ok(hotel);
 
-        } catch (ConstraintViolationException ce)
+        }
+        catch (ConstraintViolationException ce)
         {
             Map<String, String> responseObj = new HashMap<>();
             for (ConstraintViolation<?> violation : ce.getConstraintViolations())
@@ -165,7 +186,8 @@ public class HotelRestService
                 responseObj.put(violation.getPropertyPath().toString(), violation.getMessage());
             }
             throw new RestServiceException("Bad Request", responseObj, Response.Status.BAD_REQUEST, ce);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw new RestServiceException(e);
         }
@@ -173,6 +195,10 @@ public class HotelRestService
         log.info("updateHotel completed. Hotel = " + hotel);
         return builder.build();
     }
+
+
+    //------------COMMENTING FOR BETTER VISIBILITY--------------
+
 
     @DELETE
     @Path("/{id:[0-9]+}")
@@ -193,13 +219,13 @@ public class HotelRestService
         {
             throw new RestServiceException("No Hotel with the id " + id + " was found!", Response.Status.NOT_FOUND);
         }
-
         try
         {
             service.delete(hotel);
             return Response.noContent().build();
 
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             throw new RestServiceException(e);
         }
