@@ -18,6 +18,7 @@ uk/ac/newcastle/enterprisemiddleware/customer/CustomerService.class
 uk/ac/newcastle/enterprisemiddleware/contact/ContactRestService.class
 uk/ac/newcastle/enterprisemiddleware/contact/Contact.class
 uk/ac/newcastle/enterprisemiddleware/util/ErrorMessage.class
+uk/ac/newcastle/enterprisemiddleware/guestbooking/GuestBookingRestService.class
 uk/ac/newcastle/enterprisemiddleware/booking/BookingService.class
 uk/ac/newcastle/enterprisemiddleware/booking/BookingRepository.class
 uk/ac/newcastle/enterprisemiddleware/contact/UniqueEmailException.class

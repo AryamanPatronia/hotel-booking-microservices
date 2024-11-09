@@ -26,6 +26,7 @@ public class Hotel implements Serializable
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "hotelID", nullable = false)
     private Long id;
 
     @NotNull

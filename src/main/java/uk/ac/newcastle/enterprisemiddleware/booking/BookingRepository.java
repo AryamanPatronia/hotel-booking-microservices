@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * <p>The methods are 'package' scope and should only be accessed by a Service/Control object.</p>
  * @author AryamanPatronia
  * @see Booking
- * @see javax.persistence.EntityManager
+ * @see EntityManager
  */
 @RequestScoped
 public class BookingRepository

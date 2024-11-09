@@ -1,7 +1,9 @@
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/hotel/HotelRepository.java
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/util/ErrorMessage.java
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/customer/CustomerService.java
+/Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/guestbooking/GuestBookingRestService.java
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/hotel/UniqueHotelNameException.java
+/Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/guestbooking/GuestBooking.java
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/contact/ContactService.java
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/booking/BookingRepository.java
 /Users/aryanpatronia/Documents/GitHub/CSC8104-Aryaman-Patronia/src/main/java/uk/ac/newcastle/enterprisemiddleware/Application.java

@@ -54,7 +54,29 @@ public class CustomerValidator
         {
             throw new UniqueEmailException("Unique Email Violation");
         }
+
+        // Check the uniqueness of the phone number
+        if (phoneNumberAlreadyExists(customer.getCustomerPhoneNumber(), customer.getCustomerID()))
+        {
+            throw new ValidationException("A customer with this phone number already exists.");
+        }
+
+
+
     }
+
+    /**
+     * This method checks if a phone number already exists...
+     * @param phoneNumber
+     * @param customerId
+     * @return existingCustomer
+     */
+    private boolean phoneNumberAlreadyExists(String phoneNumber, Long customerId)
+    {
+        Customer existingCustomer = crud.findByPhoneNumber(phoneNumber);
+        return existingCustomer != null && !existingCustomer.getCustomerID().equals(customerId);
+    }
+
     /**
      * <p>Checks if a customer with the same email address is already registered. This is the only way to easily capture the
      * "@UniqueConstraint(columnNames = "customerEmail")" constraint from the Customer class.</p>

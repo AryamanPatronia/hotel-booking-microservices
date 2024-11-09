@@ -3,6 +3,7 @@ package uk.ac.newcastle.enterprisemiddleware.customer;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,6 +30,9 @@ public class CustomerService
 
     @Inject
     CustomerRepository crud;
+
+    @Inject
+    EntityManager em;
 
     /**
      * <p>Returns a list of all persisted {@link Customer} objects, sorted alphabetically by customer name.</p>
@@ -80,8 +84,12 @@ public class CustomerService
         validator.validateCustomer(customer);
 
         // Create the customer in the database
-        return crud.create(customer);
+        return em.merge(customer);
     }
+
+
+
+
     /**
      * <p>Updates an existing Customer object in the application database.</p>
      *
@@ -124,4 +132,6 @@ public class CustomerService
 
         return deletedCustomer;
     }
+
+
 }

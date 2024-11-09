@@ -52,7 +52,7 @@ public class HotelRestService {
      */
 
     @GET
-    @Operation(summary = "Fetch all Hotels", description = "Returns a JSON array of all stored Hotel objects.")
+    @Operation(summary = "Fetch all hotels...", description = "Returns a JSON array of all stored Hotel objects.")
     public Response retrieveAllHotels()
     {
         List<Hotel> hotels = hotelRepository.findAllOrderedByName();
@@ -63,7 +63,7 @@ public class HotelRestService {
 
     @GET
     @Path("/{id:[0-9]+}")
-    @Operation(summary = "Fetch a Hotel by id", description = "Returns a JSON representation of the Hotel object with the provided id.")
+    @Operation(summary = "Fetch a hotel by id...", description = "Returns a JSON representation of the Hotel object with the provided id.")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Hotel found"),
             @APIResponse(responseCode = "404", description = "Hotel with id not found")
@@ -89,7 +89,7 @@ public class HotelRestService {
      * @return
      */
     @POST
-    @Operation(description = "Add a new Hotel to the database")
+    @Operation(summary = "Add a new hotel to the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "201", description = "Hotel created successfully."),
             @APIResponse(responseCode = "400", description = "Invalid Hotel supplied in request body"),
@@ -140,7 +140,7 @@ public class HotelRestService {
 
     @PUT
     @Path("/{id:[0-9]+}")
-    @Operation(description = "Update a Hotel in the database")
+    @Operation(summary = "Update a hotel in the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Hotel updated successfully"),
             @APIResponse(responseCode = "400", description = "Invalid Hotel supplied in request body"),
@@ -202,7 +202,7 @@ public class HotelRestService {
 
     @DELETE
     @Path("/{id:[0-9]+}")
-    @Operation(description = "Delete a Hotel from the database")
+    @Operation(summary = "Delete a hotel from the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "204", description = "The hotel has been successfully deleted"),
             @APIResponse(responseCode = "404", description = "Hotel with id not found"),

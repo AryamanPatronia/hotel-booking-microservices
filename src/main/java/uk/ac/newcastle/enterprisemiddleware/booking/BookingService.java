@@ -6,6 +6,7 @@ import uk.ac.newcastle.enterprisemiddleware.hotel.Hotel;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -28,6 +29,9 @@ public class BookingService
 
     @Inject
     BookingRepository crud;
+
+    @Inject
+    EntityManager em;
 
     /**
      * <p>Returns a list of all persisted {@link Booking} objects, sorted by ID.</p>
@@ -65,7 +69,7 @@ public class BookingService
                 " and Hotel ID: " + booking.getHotel().getId());
 
         // Create the booking in the database
-        return crud.create(booking);
+        return em.merge(booking); //changed...
     }
 
     /**

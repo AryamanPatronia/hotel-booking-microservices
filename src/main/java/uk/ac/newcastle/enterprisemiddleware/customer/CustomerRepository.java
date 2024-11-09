@@ -4,7 +4,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+
 import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,6 +33,8 @@ public class CustomerRepository
     @Inject
     EntityManager em;
 
+
+
     /**
      * <p>Returns a List of all persisted {@link Customer} objects, sorted alphabetically by customer name.</p>
      *
@@ -53,6 +57,8 @@ public class CustomerRepository
         return em.find(Customer.class, customerID);
     }
 
+
+
     /**
      * <p>Returns a single Customer object, specified by a String customerEmail.</p>
      *
@@ -67,6 +73,26 @@ public class CustomerRepository
                 .setParameter("email", customerEmail);
         return query.getSingleResult();
     }
+
+    /**
+     * Returns the customer object specified by the phone number...
+     * @param phoneNumber
+     */
+
+    public Customer findByPhoneNumber(String phoneNumber)
+    {
+        try
+        {
+            return em.createQuery("SELECT c FROM Customer c WHERE c.customerPhoneNumber = :phoneNumber", Customer.class)
+                    .setParameter("phoneNumber", phoneNumber)
+                    .getSingleResult();
+        }
+        catch (NoResultException e)
+        {
+            return null; // No customer with that phone number
+        }
+    }
+
 
 
     /**
@@ -130,5 +156,9 @@ public class CustomerRepository
 
         return customer;
     }
+
+
+
+
 
 }

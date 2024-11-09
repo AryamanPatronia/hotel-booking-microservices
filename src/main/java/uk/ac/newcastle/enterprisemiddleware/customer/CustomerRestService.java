@@ -126,7 +126,7 @@ public class CustomerRestService
      * @return A Response indicating the outcome of the create operation
      */
     @POST
-    @Operation(description = "Add a new Customer to the database")
+    @Operation(summary = "Add a new customer to the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "201", description = "Customer created successfully!"),
             @APIResponse(responseCode = "400", description = "Invalid Customer supplied in request body..."),
@@ -182,7 +182,7 @@ public class CustomerRestService
      */
     @PUT
     @Path("/{id:[0-9]+}")
-    @Operation(description = "Update a Customer in the database")
+    @Operation(summary = "Update a customer in the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Customer updated successfully"),
             @APIResponse(responseCode = "400", description = "Invalid Customer supplied in request body"),
@@ -255,7 +255,7 @@ public class CustomerRestService
      */
     @DELETE
     @Path("/{id:[0-9]+}")
-    @Operation(description = "Delete a Customer from the database")
+    @Operation(summary = "Delete a customer from the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "204", description = "The customer has been successfully deleted"),
             @APIResponse(responseCode = "400", description = "Invalid Customer id supplied"),

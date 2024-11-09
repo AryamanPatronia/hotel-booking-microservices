@@ -19,7 +19,7 @@ import java.util.Set;
  * @author AryamanPatronia
  * @see Booking
  * @see BookingRepository
- * @see javax.validation.Validator
+ * @see Validator
  */
 @ApplicationScoped
 public class BookingValidator

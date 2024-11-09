@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 /**
  * @author AryamanPatronia
  * @see BookingService
- * @see javax.ws.rs.core.Response
+ * @see Response
  */
 
 @Path("/bookings")
@@ -46,11 +46,11 @@ public class BookingRestService
     @Inject
     BookingValidator bookingValidator;
 
-    @Inject
-    CustomerService customerService;
-
-    @Inject
-    HotelService hotelService;
+//    @Inject
+//    CustomerService customerService;
+//
+//    @Inject
+//    HotelService hotelService;
 
     /**
      * Retrieve all Bookings.
@@ -90,7 +90,7 @@ public class BookingRestService
      * Create a new Booking.
      */
     @POST
-    @Operation(description = "This operation adds a new booking to the database...")
+    @Operation(summary = "Create a new booking...")
     @APIResponses(value = {
             @APIResponse(responseCode = "201", description = "Booking created successfully!"),
             @APIResponse(responseCode = "400", description = "Invalid Booking supplied in request body..."),
@@ -141,7 +141,7 @@ public class BookingRestService
      */
     @PUT
     @Path("/{id:[0-9]+}")
-    @Operation(description = "Update a booking in the database...")
+    @Operation(summary = "Update a booking...")
     @APIResponses(value = {
             @APIResponse(responseCode = "200", description = "Booking updated successfully!"),
             @APIResponse(responseCode = "400", description = "Invalid Booking supplied in request body..."),
@@ -203,7 +203,7 @@ public class BookingRestService
      */
     @DELETE
     @Path("/{id:[0-9]+}")
-    @Operation(description = "This operation deletes a booking from the database...")
+    @Operation(summary = "Delete a booking from the database...")
     @APIResponses(value = {
             @APIResponse(responseCode = "204", description = "The booking has been successfully deleted!"),
             @APIResponse(responseCode = "404", description = "Booking with id not found..."),
