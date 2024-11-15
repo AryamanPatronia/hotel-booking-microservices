@@ -55,14 +55,11 @@ public class CustomerValidator
             throw new UniqueEmailException("Unique Email Violation");
         }
 
-        // Check the uniqueness of the phone number
+        // Check the uniqueness of the phone number...
         if (phoneNumberAlreadyExists(customer.getCustomerPhoneNumber(), customer.getCustomerID()))
         {
             throw new ValidationException("A customer with this phone number already exists.");
         }
-
-
-
     }
 
     /**

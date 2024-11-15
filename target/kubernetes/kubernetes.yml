@@ -3,8 +3,8 @@ apiVersion: v1
 kind: Service
 metadata:
   annotations:
-    app.quarkus.io/commit-id: f94f89be28eb622b5229367a7572c431225345fa
-    app.quarkus.io/build-timestamp: 2024-11-09 - 08:14:59 +0000
+    app.quarkus.io/commit-id: e805dd0abc77205f8aa86ef64437a7a5eaefef76
+    app.quarkus.io/build-timestamp: 2024-11-15 - 13:29:58 +0000
   labels:
     app.kubernetes.io/name: csc8104
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
@@ -23,26 +23,26 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    app.quarkus.io/commit-id: f94f89be28eb622b5229367a7572c431225345fa
-    app.quarkus.io/build-timestamp: 2024-11-09 - 08:14:59 +0000
+    app.quarkus.io/commit-id: e805dd0abc77205f8aa86ef64437a7a5eaefef76
+    app.quarkus.io/build-timestamp: 2024-11-15 - 13:29:58 +0000
   labels:
-    app.kubernetes.io/name: csc8104
     app.kubernetes.io/version: 1.0.0-SNAPSHOT
+    app.kubernetes.io/name: csc8104
   name: csc8104
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: csc8104
       app.kubernetes.io/version: 1.0.0-SNAPSHOT
+      app.kubernetes.io/name: csc8104
   template:
     metadata:
       annotations:
-        app.quarkus.io/commit-id: f94f89be28eb622b5229367a7572c431225345fa
-        app.quarkus.io/build-timestamp: 2024-11-09 - 08:14:59 +0000
+        app.quarkus.io/commit-id: e805dd0abc77205f8aa86ef64437a7a5eaefef76
+        app.quarkus.io/build-timestamp: 2024-11-15 - 13:29:58 +0000
       labels:
-        app.kubernetes.io/name: csc8104
         app.kubernetes.io/version: 1.0.0-SNAPSHOT
+        app.kubernetes.io/name: csc8104
     spec:
       containers:
         - env:

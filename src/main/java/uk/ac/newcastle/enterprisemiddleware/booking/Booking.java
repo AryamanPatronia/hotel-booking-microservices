@@ -55,7 +55,6 @@ public class Booking implements Serializable
     @Column(name = "checkin_date")
     private LocalDate checkinDate;
 
-
     public Long getId()
     {
         return id;
@@ -81,6 +80,7 @@ public class Booking implements Serializable
         return hotel;
     }
 
+
     public void setHotel(Hotel hotel)
     {
         this.hotel = hotel;
@@ -105,6 +105,7 @@ public class Booking implements Serializable
     {
         this.checkinDate = checkinDate;
     }
+
 
     // Override equals and hashCode to use id for equality...
     @Override

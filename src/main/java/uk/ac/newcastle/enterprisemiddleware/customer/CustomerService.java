@@ -1,9 +1,12 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
 
+import uk.ac.newcastle.enterprisemiddleware.booking.Booking;
+
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -86,8 +89,6 @@ public class CustomerService
         // Create the customer in the database
         return em.merge(customer);
     }
-
-
 
 
     /**

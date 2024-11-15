@@ -4,8 +4,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/commit-id" : "f94f89be28eb622b5229367a7572c431225345fa",
-      "app.quarkus.io/build-timestamp" : "2024-11-09 - 08:14:59 +0000"
+      "app.quarkus.io/commit-id" : "e805dd0abc77205f8aa86ef64437a7a5eaefef76",
+      "app.quarkus.io/build-timestamp" : "2024-11-15 - 13:29:58 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -32,8 +32,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/commit-id" : "f94f89be28eb622b5229367a7572c431225345fa",
-      "app.quarkus.io/build-timestamp" : "2024-11-09 - 08:14:59 +0000"
+      "app.quarkus.io/commit-id" : "e805dd0abc77205f8aa86ef64437a7a5eaefef76",
+      "app.quarkus.io/build-timestamp" : "2024-11-15 - 13:29:58 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -62,8 +62,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/commit-id" : "f94f89be28eb622b5229367a7572c431225345fa",
-      "app.quarkus.io/build-timestamp" : "2024-11-09 - 08:14:59 +0000"
+      "app.quarkus.io/commit-id" : "e805dd0abc77205f8aa86ef64437a7a5eaefef76",
+      "app.quarkus.io/build-timestamp" : "2024-11-15 - 13:29:58 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -97,8 +97,8 @@
   "metadata" : {
     "annotations" : {
       "app.openshift.io/vcs-url" : "<<unknown>>",
-      "app.quarkus.io/commit-id" : "f94f89be28eb622b5229367a7572c431225345fa",
-      "app.quarkus.io/build-timestamp" : "2024-11-09 - 08:14:59 +0000"
+      "app.quarkus.io/commit-id" : "e805dd0abc77205f8aa86ef64437a7a5eaefef76",
+      "app.quarkus.io/build-timestamp" : "2024-11-15 - 13:29:58 +0000"
     },
     "labels" : {
       "app.kubernetes.io/name" : "csc8104",
@@ -117,8 +117,8 @@
       "metadata" : {
         "annotations" : {
           "app.openshift.io/vcs-url" : "<<unknown>>",
-          "app.quarkus.io/commit-id" : "f94f89be28eb622b5229367a7572c431225345fa",
-          "app.quarkus.io/build-timestamp" : "2024-11-09 - 08:14:59 +0000"
+          "app.quarkus.io/commit-id" : "e805dd0abc77205f8aa86ef64437a7a5eaefef76",
+          "app.quarkus.io/build-timestamp" : "2024-11-15 - 13:29:58 +0000"
         },
         "labels" : {
           "app.kubernetes.io/name" : "csc8104",

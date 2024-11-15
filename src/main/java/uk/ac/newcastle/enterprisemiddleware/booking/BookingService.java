@@ -3,10 +3,13 @@ package uk.ac.newcastle.enterprisemiddleware.booking;
 import uk.ac.newcastle.enterprisemiddleware.customer.Customer;
 import uk.ac.newcastle.enterprisemiddleware.hotel.Hotel;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -20,7 +23,8 @@ import java.util.logging.Logger;
  * @see Customer
  * @see Hotel
  */
-@Dependent
+
+@ApplicationScoped
 public class BookingService
 {
     @Inject

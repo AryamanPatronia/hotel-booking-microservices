@@ -19,6 +19,7 @@ public class GuestBooking
     @NotNull
     private Booking booking;
 
+
     public Customer getCustomer()
     {
         return customer;

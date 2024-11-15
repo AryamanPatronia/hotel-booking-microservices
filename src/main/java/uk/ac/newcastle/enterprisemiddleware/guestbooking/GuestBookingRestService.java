@@ -1,6 +1,8 @@
 package uk.ac.newcastle.enterprisemiddleware.guestbooking;
 
 import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import uk.ac.newcastle.enterprisemiddleware.booking.Booking;
 import uk.ac.newcastle.enterprisemiddleware.booking.BookingService;
@@ -52,6 +54,8 @@ public class GuestBookingRestService
      */
     @POST
     @Operation(summary = "Perform a guest booking...", description = "Creates a booking and a customer for the specified hotel...")
+    @APIResponses(value = {
+            @APIResponse(responseCode = "201", description = "Successfully created a guest booking...")})
     public Response createGuestBooking(GuestBooking guestBooking)
     {
         try

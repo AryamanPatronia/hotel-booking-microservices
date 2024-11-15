@@ -1,6 +1,4 @@
 package uk.ac.newcastle.enterprisemiddleware.customer;
-
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -56,7 +54,6 @@ public class Customer implements Serializable
     @Column(name = "customer_phone_number")
     private String customerPhoneNumber;
 
-
     public Long getCustomerID()
     {
         return customerID;
@@ -111,7 +108,4 @@ public class Customer implements Serializable
     {
         return Objects.hashCode(customerEmail);
     }
-
-
-
 }
